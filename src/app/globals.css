@@ -1,21 +1,169 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@source "../../node_modules/@prodbyeagle/eagle-ui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+	--font-sans: 'DM Sans', 'Inter';
+	--font-mono: 'Geist Mono', monospace;
+	--animate-shiny: shiny 1.5s ease-in-out infinite;
+
+	@keyframes shiny {
+		0% {
+			transform: translateX(-120%) rotate(-30deg);
+		}
+		100% {
+			transform: translateX(130%) rotate(-30deg);
+		}
+	}
 }
 
+/* Base style for shiny effect */
+.shiny-button,
+.always-shiny {
+	position: relative;
+	overflow: hidden;
+}
+
+/* Always shining effect */
+.always-shiny::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -150%;
+	width: 200%;
+	height: 200%;
+	background: linear-gradient(
+		120deg,
+		rgba(200, 200, 200, var(--shiny-light-opacity, 0.4)) 20%,
+		rgba(200, 200, 200, var(--shiny-light-opacity, 0.6)) 50%,
+		rgba(200, 200, 200, var(--shiny-light-opacity, 0.4)) 80%
+	);
+	transform: rotate(-30deg);
+	opacity: var(--shiny-light-opacity, 0.6);
+	animation: shiny 2s linear infinite;
+}
+
+/* Hover-triggered shiny effect */
+.shiny-button::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -150%;
+	width: 200%;
+	height: 200%;
+	background: linear-gradient(
+		120deg,
+		rgba(200, 200, 200, var(--shiny-light-opacity, 0.4)) 20%,
+		rgba(200, 200, 200, var(--shiny-light-opacity, 0.6)) 50%,
+		rgba(200, 200, 200, var(--shiny-light-opacity, 0.4)) 80%
+	);
+	transform: rotate(-30deg);
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+}
+
+/* Dark mode adjustments for shiny effect */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	.always-shiny::before,
+	.shiny-button::before {
+		--shiny-light-opacity: 0.15;
+		background: linear-gradient(
+			120deg,
+			rgba(255, 255, 255, 0.1) 20%,
+			rgba(255, 255, 255, 0.3) 50%,
+			rgba(255, 255, 255, 0.1) 80%
+		);
+	}
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Hover effect in light mode */
+.shiny-button:hover::before {
+	opacity: 0.7;
+	animation: shiny 1.5s ease-in-out infinite;
+}
+
+/* Fade Animations */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes fadeInFromTop {
+	0% {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOutToTop {
+	0% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+}
+
+@keyframes fadeInFromBottom {
+	0% {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOutToBottom {
+	0% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+}
+
+/* Dialog Animations */
+@keyframes dialog-in {
+	0% {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes dialog-out {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+}
+
+.dialog-enter {
+	animation: dialog-in 0.1s ease-in-out;
+}
+
+.dialog-exit {
+	animation: dialog-out 0.9s ease-in-out;
 }

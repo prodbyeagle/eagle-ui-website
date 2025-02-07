@@ -63,7 +63,6 @@ const DemoPage = () => {
 	const [sliderValue3, setSliderValue3] = useState(6);
 	const [sliderValue4, setSliderValue4] = useState(10);
 	const [sliderValue5, setSliderValue5] = useState(25);
-	const [toggleChecked, setToggleChecked] = useState(false);
 
 	const openDialog = () => setIsOpen(true);
 	const closeDialog = () => setIsOpen(false);

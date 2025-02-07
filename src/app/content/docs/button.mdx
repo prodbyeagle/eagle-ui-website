@@ -1,0 +1,126 @@
+```mdx
+---
+title: Button Component
+---
+
+import { Button } from '../../components/Button/Button';
+import { LucideIcon, Activity } from 'lucide-react';
+
+# Button Component
+
+Der **Button**-Component bietet verschiedene visuelle Varianten und Größen, um in Ihrer Anwendung flexibel einsetzbar zu sein. Er unterstützt sowohl Text- als auch Icon-basierte Buttons und zeigt einen Ladezustand an, falls erforderlich.
+
+## Eigenschaften
+
+Die wichtigsten Props des Button-Components:
+
+- **variant** (optional): Definiert den visuellen Stil des Buttons. Mögliche Werte:
+  - `primary` (Standard): Der Standard-Button-Stil.
+  - `secondary`: Ein weniger prominenter Button-Stil.
+  - `ghost`: Ein transparenter Button mit Hover-Hintergrund.
+  - `border`: Ein Button mit Rahmen, aber ohne Hintergrund.
+  - `danger`: Ein Button, der typischerweise eine destruktive Aktion signalisiert.
+  - `link`: Ein Button, der wie ein Link gestylt ist.
+  - `shiny`: Ein besonderer "shiny" Button.
+  
+- **size** (optional): Bestimmt die Größe des Buttons. Mögliche Werte:
+  - `sm`: Klein
+  - `md`: Mittel (Standard)
+  - `lg`: Groß
+  
+- **icon** (optional): Ein Icon aus der `lucide-react` Bibliothek, das im Button angezeigt wird.
+  
+- **content** (optional): Der Text, der im Button angezeigt wird. Falls kein Text angegeben wird, kann der Button nur ein Icon darstellen.
+  
+- **loading** (optional): Wenn `true`, wird ein Spinner angezeigt und der Button deaktiviert.
+
+- Zusätzlich werden alle regulären HTML-Button-Attribute unterstützt.
+
+## Verwendung
+
+### Beispiel 1: Standard Button
+
+```jsx
+import React from 'react';
+import { Button } from '../../components/Button/Button';
+
+export default function StandardButtonExample() {
+  return <Button content="Klicken Sie mich" onClick={() => alert('Button geklickt!')} />;
+}
+```
+
+### Beispiel 2: Button mit Icon
+
+Hier wird ein Button mit einem Icon (z.B. `Activity` aus `lucide-react`) verwendet.
+
+```jsx
+import React from 'react';
+import { Button } from '../../components/Button/Button';
+import { Activity } from 'lucide-react';
+
+export default function IconButtonExample() {
+  return <Button content="Aktivität" icon={Activity} onClick={() => alert('Aktivität Button geklickt!')} />;
+}
+```
+
+### Beispiel 3: Button im Ladezustand
+
+Der Button zeigt einen Spinner, wenn `loading` auf `true` gesetzt ist.
+
+```jsx
+import React, { useState } from 'react';
+import { Button } from '../../components/Button/Button';
+
+export default function LoadingButtonExample() {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    // Simuliere einen asynchronen Vorgang
+    setTimeout(() => {
+      setLoading(false);
+      alert('Vorgang abgeschlossen');
+    }, 2000);
+  };
+
+  return (
+    <Button content="Laden..." loading={loading} onClick={handleClick} />
+  );
+}
+```
+
+## Technische Details
+
+- **Basis-Stil:**  
+  Der Button verwendet grundlegende Klassen für Layout und Interaktionen:
+  - `inline-flex`, `items-center`, `justify-center` für die Zentrierung des Inhalts.
+  - Transitionen und aktive Zustände für ein flüssiges Feedback.
+  - Angepasste Klassen für deaktivierte Zustände (`disabled:opacity-60 disabled:pointer-events-none`).
+
+- **Varianten:**  
+  Für jede Variante wird eine eigene CSS-Klasse definiert, die z.B. den Hintergrund, den Text und Hover-Zustände steuert.
+
+- **Größen:**  
+  Unterschiedliche Padding- und Textgrößen werden über die `sizes`-Konfiguration eingestellt.
+
+- **Spinner:**  
+  Beim Laden wird ein `Spinner`-Component eingebunden, der als visuelles Feedback dient.
+
+- **Icon Handling:**  
+  Wenn ein Icon übergeben wird, wird es neben dem Text (sofern vorhanden) dargestellt. Die Abstände werden dynamisch anhand der Anwesenheit von `content` oder `children` gesteuert.
+
+## Best Practices
+
+- **Error Handling:**  
+  Stellen Sie sicher, dass alle onClick-Handler und andere Events Fehler abfangen oder korrekt behandeln, insbesondere wenn asynchrone Vorgänge ausgeführt werden.
+
+- **Barrierefreiheit:**  
+  Vergessen Sie nicht, bei Buttons ohne sichtbaren Text entsprechende `aria-label`-Attribute zu setzen, um die Zugänglichkeit zu gewährleisten.
+
+- **Performance:**  
+  Nutzen Sie memoization oder React.memo, falls der Button in häufig aktualisierten Komponenten eingebettet ist, um unnötige Neuberechnungen zu vermeiden.
+
+## Fazit
+
+Der Button-Component ist ein flexibles und anpassbares UI-Element, das in unterschiedlichen Szenarien eingesetzt werden kann – ob mit Icon, Text oder als Ladeanzeige. Passen Sie die Varianten und Größen an Ihre Designanforderungen an und integrieren Sie den Button nahtlos in Ihre Anwendung.
+```

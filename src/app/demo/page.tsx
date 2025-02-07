@@ -8,9 +8,11 @@ import {
 	Select,
 	Dialog,
 	Card,
-	// Spinner,
+	Spinner,
 	Badge,
 	ButtonGroup,
+	Slider,
+	Textarea
 } from '@prodbyeagle/eagle-ui';
 import {
 	FormInput,
@@ -22,6 +24,10 @@ import {
 	MessageCircleWarning,
 	Sandwich,
 	Brain,
+	Home,
+	Settings,
+	User,
+	Shield,
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -38,8 +44,8 @@ const ComponentCategory = ({
 }: ComponentCategoryProps) => (
 	<Card>
 		<div className='flex items-center gap-2 mb-6'>
-			<Icon className='w-6 h-6 dark:text-neutral-100 text-neutral-800' />
-			<h2 className='text-2xl font-semibold dark:text-neutral-100 text-neutral-800'>
+			<Icon className='w-6 h-6 dark:text-neutral-100 text-neutral-900' />
+			<h2 className='text-2xl font-semibold dark:text-neutral-100 text-neutral-900'>
 				{title}
 			</h2>
 		</div>
@@ -51,6 +57,13 @@ const DemoPage = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
 	const [selected, setSelected] = useState('option1');
+	const [sliderValue, setSliderValue] = useState(5);
+	const [sliderValue1, setSliderValue1] = useState(2);
+	const [sliderValue2, setSliderValue2] = useState(4);
+	const [sliderValue3, setSliderValue3] = useState(6);
+	const [sliderValue4, setSliderValue4] = useState(10);
+	const [sliderValue5, setSliderValue5] = useState(25);
+	const [toggleChecked, setToggleChecked] = useState(false);
 
 	const openDialog = () => setIsOpen(true);
 	const closeDialog = () => setIsOpen(false);
@@ -67,10 +80,10 @@ const DemoPage = () => {
 	};
 
 	return (
-		<div className='min-h-screen bg-neutral-100 dark:bg-neutral-900'>
+		<div className='min-h-screen bg-neutral-100 dark:bg-neutral-950'>
 			<main className='max-w-screen-xl mx-auto px-4 py-8'>
 				<div className='flex items-center justify-between mb-8'>
-					<h1 className='text-3xl tracking-tight font-bold dark:text-neutral-100 text-neutral-800'>
+					<h1 className='text-3xl tracking-tight font-bold dark:text-neutral-100 text-neutral-900'>
 						EagleUI{' '}
 						<Image
 							src={
@@ -91,7 +104,7 @@ const DemoPage = () => {
 						↓
 					</span>
 				</h3>
-				<div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+				<div className='grid grid-cols-1 lg:grid-cols-1 gap-6'>
 					<ComponentCategory
 						title='Interactive Elements'
 						icon={ToggleLeft}
@@ -117,6 +130,11 @@ const DemoPage = () => {
 										disabled
 									/>
 									<Button content='Danger' variant='danger' />
+									<div className='grid grid-cols-3 gap-3'>
+										<Button size='sm' content='Small' />
+										<Button size='md' content='Default Size' />
+										<Button size='lg' content='Large' />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -138,14 +156,26 @@ const DemoPage = () => {
 							</div>
 						</div>
 						<div>
-							<h3 className='text-lg font-medium mb-3 text-neutral-700 dark:text-neutral-200'>
-								Buttons
+							<h3 className='text-lg font-medium my-3 text-neutral-700 dark:text-neutral-200'>
+								ButtonGroup
 							</h3>
 							<div>
 								<ButtonGroup
-									buttons={['Button 1', 'Button 2', 'Button 3']}
+									buttons={[
+										{ label: 'Home', icon: Home },
+										{
+											label: 'Settings',
+											icon: Settings,
+										},
+										{ label: 'Profile', icon: User },
+										{ label: 'Admin Panel', icon: User },
+										{ label: 'Super Admin Panel', icon: Shield },
+									]}
+									className='mb-2 w-full'
 									activeButton={selected}
-									onButtonClick={(button) => setSelected(button)}
+									onButtonClick={(button) =>
+										setSelected(button)
+									}
 								/>
 							</div>
 						</div>
@@ -172,6 +202,19 @@ const DemoPage = () => {
 								icon={Brain}
 								placeholder='Disabled input'
 							/>
+
+							<Textarea
+								label='Password'
+								placeholder='Demo Textarea'
+								rows={3}
+							/>
+
+							<Textarea
+							disabled
+								label='Password (Disabled)'
+								placeholder='Disabled Textarea'
+								rows={3}
+							/>
 						</div>
 
 						<div>
@@ -181,18 +224,110 @@ const DemoPage = () => {
 							<Select
 								value={selected}
 								onChange={handleSelectChange}
-								options={Array.from({ length: 50 }, (_, i) => ({
+								options={Array.from({ length: 10 }, (_, i) => ({
 									value: `option${i + 1}`,
 									label: `Option ${i + 1}`,
 								}))}
 							/>
 						</div>
+
+						<div>
+							<h3 className='text-lg font-medium my-3 dark:text-neutral-200'>
+								Slider
+							</h3>
+							<Slider
+								min={0}
+								max={10}
+								value={sliderValue}
+								markers={[0, 2, 5, 7, 10]}
+								onChange={setSliderValue}
+								variant='standard'
+								label='Volume'
+								step={1}
+							/>
+
+							<Slider
+								min={0}
+								max={4}
+								value={sliderValue1}
+								onChange={setSliderValue1}
+								label='Progress'
+								step={1}
+							/>
+
+							<Slider
+								min={0}
+								max={100}
+								value={sliderValue2}
+								onChange={setSliderValue2}
+								variant='non-uniform'
+								markers={[0, 15, 35, 65, 85, 100]}
+								label='Custom Steps'
+							/>
+
+							<Slider
+								min={0}
+								max={12}
+								value={sliderValue3}
+								onChange={setSliderValue3}
+								variant='none'
+								label='Clean Slider'
+								step={1}
+							/>
+
+							<Slider
+								min={0}
+								max={100}
+								variant='non-uniform'
+								markers={[0, 15, 35, 65, 85, 100]}
+								label='Custom Steps'
+								value={sliderValue4}
+								onChange={setSliderValue4}
+								step={5}
+							/>
+
+							<Slider
+								min={0}
+								max={50}
+								step={1}
+								value={sliderValue5}
+								onChange={setSliderValue5}
+								disabled
+							/>
+						</div>
+
+						{/* <div>
+							<h3 className='text-lg font-medium my-3 dark:text-neutral-200'>
+								Toggle
+							</h3>
+							<div className='grid grid-cols-5 gap-3'>
+								<Toggle
+									checked={toggleChecked}
+									onChange={setToggleChecked}
+									size='sm'
+								/>
+								<Toggle
+									checked={toggleChecked}
+									onChange={setToggleChecked}
+								/>
+								<Toggle
+									checked={toggleChecked}
+									onChange={setToggleChecked}
+									size='lg'
+								/>
+								<Toggle
+									checked={toggleChecked}
+									onChange={setToggleChecked}
+									disabled
+								/>
+							</div>
+						</div> */}
 					</ComponentCategory>
 
 					<ComponentCategory title='Display Elements' icon={Layout}>
 						<div className='space-y-6'>
 							<div>
-								{/* <div>
+								<div>
 									<h3 className='text-lg font-medium mb-3 dark:text-neutral-200'>
 										Spinner
 									</h3>
@@ -246,7 +381,7 @@ const DemoPage = () => {
 											speed={8}
 										/>
 									</div>
-								</div> */}
+								</div>
 								<div className='mt-4'>
 									<h3 className='text-lg font-medium mb-3 dark:text-neutral-200'>
 										Badges
@@ -335,6 +470,7 @@ const DemoPage = () => {
 									<Gradient
 										width='100%'
 										height='100%'
+										warpIntensity={0.1}
 										colors={[
 											'#ca9bee',
 											'#8b64a8',
@@ -356,7 +492,7 @@ const DemoPage = () => {
 					onClose={closeDialog}
 					title='Demo Dialog'
 				>
-					<div className='space-y-6 dark:text-neutral-100 text-neutral-800'>
+					<div className='space-y-6 dark:text-neutral-100 text-neutral-900'>
 						<p className='text-lg'>
 							This is a demo dialog with a button:
 						</p>
@@ -373,7 +509,7 @@ const DemoPage = () => {
 					onClose={closeAlert}
 					title='Demo Alert'
 				>
-					<div className='space-y-6 dark:text-neutral-100 text-neutral-800'>
+					<div className='space-y-6 dark:text-neutral-100 text-neutral-900'>
 						<p className='text-lg'>
 							This is a demo Alert with a button:
 						</p>
